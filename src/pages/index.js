@@ -6,7 +6,7 @@ import { collection } from "../utils/collection";
 import { Loading } from "../components/Loading";
 import { Web3Context } from "../context/Web3Context";
 
-const platform = 'Tezos'
+const platform = 'Solana'
 
 export default function Home() {
   const [myNfts, setMyNfts] = useState([]);
@@ -120,7 +120,7 @@ export default function Home() {
         {HasMoreNfts && showNfts === "created" && (
           <button
             onClick={getData}
-            className="flex justify-center p-2 m-auto font-semibold bg-fontColor bg-gray-200 rounded "
+            className="flex justify-center p-2 m-auto font-semibold bg-gray-200 rounded bg-fontColor "
           >
             Load More
           </button>
