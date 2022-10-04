@@ -33,7 +33,6 @@ const SolanaContext = ({ children }) => {
 
   useEffect(() => {
     if (walletAdapter.connected) {
-      console.log("setting address: ", walletAdapter.publicKey.toBase58())
       setAddress(walletAdapter.publicKey.toBase58())
     }
   }, [walletAdapter.connected]) // eslint-disable-line
@@ -48,7 +47,7 @@ const SolanaContext = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log("connecting...")
+    console.log("connecting...", walletAdapter.connected)
     connect()
   }, []) // eslint-disable-line
 

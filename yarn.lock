@@ -1203,12 +1203,13 @@
   resolved "https://registry.yarnpkg.com/@csstools/selector-specificity/-/selector-specificity-2.0.2.tgz#1bfafe4b7ed0f3e4105837e056e0a89b108ebe36"
   integrity sha512-IkpVW/ehM1hWKln4fCA3NzJU8KwD+kIOvPZA4cqxoJHtE21CCzjyp+Kxbu0i5I4tBNOlXPL9mjwnWlL0VEG4Fg==
 
-"@darkblock.io/tez-widget@^0.2.11":
+"@darkblock.io/sol-widget@^0.2.14":
   version "0.2.14"
-  resolved "https://registry.yarnpkg.com/@darkblock.io/tez-widget/-/tez-widget-0.2.14.tgz#3a950c72a5cf976c2130607ddb85cb5ddc4e5b3b"
-  integrity sha512-t4CUUlJd3o1esYOC4t2bxhYWEkQZVW8Q3jVjHXbNkZV39tZsleUgMuBFuRxrsgHe4YNkBvBtvjJQVEwKHLXEfg==
+  resolved "https://registry.yarnpkg.com/@darkblock.io/sol-widget/-/sol-widget-0.2.14.tgz#19d7982897e9e040bf64793927d18c2d63903501"
+  integrity sha512-tOJ4nCsX8PyfNb9OPhSIbde0cO06CVjRTTbfGjaCXikzD1h+YfGUoLHUZw2QMCAXCjo8IehcCJoYjK8xn8f5yg==
   dependencies:
     "@xstate/react" "^2.0.0"
+    base64-arraybuffer "^1.0.2"
     openseadragon "^3.0.0"
     photoswipe "^4.1.3"
     plyr-react "^3.2.1"
@@ -1216,6 +1217,7 @@
     react-dom "^17.0.2"
     react-lottie "^1.2.3"
     react-scripts "5.0.0"
+    xstate "^4.30.1"
 
 "@eslint/eslintrc@^1.3.2":
   version "1.3.2"
@@ -4014,6 +4016,11 @@ base58check@^2.0.0:
   dependencies:
     bs58 "^3.0.0"
 
+base64-arraybuffer@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-1.0.2.tgz#1c37589a7c4b0746e34bd1feb951da2df01c1bdc"
+  integrity sha512-I3yl4r9QB5ZRY3XuJVEPfc2XhZO6YweFPI+UovAzn+8/hb3oJ6lnysaFcjVpkCPfVWFUDvoZ8kmVDP7WyRtYtQ==
+
 base64-js@^1.3.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
@@ -4400,7 +4407,12 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001400, caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001407:
+caniuse-lite@^1.0.0:
+  version "1.0.30001415"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001415.tgz#fd7ea96e9e94c181a7f56e7571efb43d92b860cc"
+  integrity sha512-ER+PfgCJUe8BqunLGWd/1EY4g8AzQcsDAVzdtMGKVtQEmKAwaFfU6vb7EAVIqTMYsqxBorYZi2+22Iouj/y7GQ==
+
+caniuse-lite@^1.0.30001400, caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001407:
   version "1.0.30001414"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001414.tgz#5f1715e506e71860b4b07c50060ea6462217611e"
   integrity sha512-t55jfSaWjCdocnFdKQoO+d2ct9C59UZg4dY3OnUlSZ447r8pUtIKdp0hpAzrGFultmTC+Us+KpKi4GZl/LXlFg==
@@ -11584,6 +11596,11 @@ xmlhttprequest-ssl@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/xmlhttprequest-ssl/-/xmlhttprequest-ssl-2.0.0.tgz#91360c86b914e67f44dce769180027c0da618c67"
   integrity sha512-QKxVRxiRACQcVuQEYFsI1hhkrMlrXHPegbbd1yn9UHOmRxY+si12nQYzri3vbzt8VdTTRviqcKxcyllFas5z2A==
+
+xstate@^4.30.1:
+  version "4.33.6"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.33.6.tgz#9e23f78879af106f1de853aba7acb2bc3b1eb950"
+  integrity sha512-A5R4fsVKADWogK2a43ssu8Fz1AF077SfrKP1ZNyDBD8lNa/l4zfR//Luofp5GSWehOQr36Jp0k2z7b+sH2ivyg==
 
 xtend@^4.0.2:
   version "4.0.2"
