@@ -5,7 +5,7 @@ const NftCard = ({ nft }) => {
   const { name, image, is_darkblocked, contract, token, description } = nft
 
   return (
-    <Link href={`details/${contract}/${token}`}>
+    <Link href={`details/${token}`}>
       {image ? (
         <div className="mb-8 text-center transition-all transform group hover:scale-105 bg-secondary rounded-xl w-72">
           <div>

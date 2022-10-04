@@ -6,8 +6,8 @@ import { dateTimeFormat } from '../../utils/dateFormatter'
 import { shortenAddr } from '../../utils/shortAddress'
 import { useRouter } from 'next/router'
 import { Web3Context } from '../../context/Web3Context'
-import { TezWidget } from '../../components/TezWidget'
 import { Loading } from '../../components/Loading'
+import { SolWidget } from '../../components/SolWidget'
 
 const countAttribs = (nft) => {
   let count = 1
@@ -19,26 +19,24 @@ const countAttribs = (nft) => {
   return count
 }
 
-const platform = 'Tezos'
+const platform = 'Solana'
 
 const NftDetailCard = () => {
   const router = useRouter()
-  const contract = router.query.params ? router.query.params[0] : null
-  const id = router.query.params ? router.query.params[1] : null
+  const { id } = router.query
   const [nftData, setNftData] = useState(null)
-  const { provider } = useContext(Web3Context)
+  const { walletAdapter } = useContext(Web3Context)
   const [isLoading, setIsLoading] = useState(false)
-  console.log(nftData, 'dataaaaaaa')
 
   useEffect(() => {
-    if (id && contract && id !== undefined && contract !== undefined) {
+    if (id && id !== undefined) {
       setIsLoading(true)
-      getNFTMetadata(contract, id, `${platform}`).then((data) => {
+      getNFTMetadata('', id, platform).then((data) => {
         setNftData(data.nft)
         setIsLoading(false)
       })
     }
-  }, [id, contract])
+  }, [id])
 
   return (
     <div>
@@ -66,14 +64,11 @@ const NftDetailCard = () => {
                 <div className="hidden mb-10 font-sans text-4xl font-bold md:block md:mb-2">{nftData.name}</div>
                 <div className="pt-2 mx-2">{nftData.nft_description}</div>
                 <div className="mx-2">
-                  {
-                    //be sure font color is dark, NPM brings a white background 
-                    <div className="flex justify-end py-3 text-gray-800">
-                      <TezWidget contract={nftData.contract} id={nftData.token} wa={provider} upgrade={true} />
-                    </div>
-                  }
+                  <div className="flex justify-end py-3 text-gray-800">
+                    <SolWidget id={nftData.token} upgrade={true} />
+                  </div>
 
-                  {<TezWidget contract={nftData.contract} id={nftData.token} wa={provider} />}
+                  <SolWidget id={nftData.token} />
                 </div>
               </div>
             </div>
@@ -124,7 +119,7 @@ const NftDetailCard = () => {
                         <p className="py-2 text-right underline truncate text-ellipsis">{shortenAddr(nftData.token)}</p>
                       </>
                     )}
-                    {contract && (
+                    {/* {contract && (
                       <>
                         <div className="py-2 text-sm font-semibold text-gray-500">
                           <h3>Contract Address</h3>
@@ -132,7 +127,7 @@ const NftDetailCard = () => {
 
                         <p className="py-2 text-right underline truncate">{shortenAddr(contract)}</p>
                       </>
-                    )}
+                    )} */}
                     {nftData.blockchain && (
                       <>
                         <div className="py-2 text-sm font-semibold text-gray-500">
