@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import { getNFTMetadata } from '../../utils/getNfts'
-import { validateImage } from '../../utils/validateImage'
+import { isImageType, validateImage } from '../../utils/validateImage'
 import { dateTimeFormat } from '../../utils/dateFormatter'
 import { shortenAddr } from '../../utils/shortAddress'
 import { useRouter } from 'next/router'
@@ -19,6 +19,7 @@ const countAttribs = (nft) => {
   return count
 }
 
+// Select the chain you want to use
 const platform = 'Solana'
 
 const NftDetailCard = () => {
@@ -27,6 +28,7 @@ const NftDetailCard = () => {
   const [nftData, setNftData] = useState(null)
   const { walletAdapter } = useContext(Web3Context)
   const [isLoading, setIsLoading] = useState(false)
+  const [creators, setCreators] = useState([])
 
   useEffect(() => {
     if (id && id !== undefined) {
@@ -37,6 +39,20 @@ const NftDetailCard = () => {
       })
     }
   }, [id])
+
+  useEffect(() => {
+    if ((!creators || creators.length < 1) && nftData != null && nftData.creator_address) {
+      setCreators([nftData.creator_address])
+    }
+  }, [nftData])
+
+  const shortPlatforms = {
+    Ethereum: `eth`,
+    Polygon: `matic`,
+    Avalanche: `avax`,
+    Solana: `sol`,
+    Tezos: `tez`,
+  }
 
   return (
     <div>
@@ -49,14 +65,20 @@ const NftDetailCard = () => {
             <div className="grid grid-cols-1 gap-1 pt-8 md:grid-cols-3">
               <div className="md:pl-20">
                 <div className="mb-10 font-sans text-4xl font-bold text-center md:hidden md:mb-2">{nftData.name}</div>
-                {nftData && nftData.image ? (
+                {!!nftData.animation_url && !isImageType(nftData.animation_url) ? (
+                  <video
+                    className="mx-auto my-5 mb-12 border border-gray-200 rounded-md shadow-md h-66"
+                    src={validateImage(nftData.animation_url)}
+                    autoPlay
+                    muted
+                    loop
+                  />
+                ) : (
                   <img // eslint-disable-line
-                    className="px-4 mx-auto my-5 rounded-md h-66"
+                    className="mx-auto my-5 mb-12 border border-gray-200 rounded-md shadow-md h-66"
                     src={validateImage(nftData.image)}
                     alt="NFT"
                   />
-                ) : (
-                  <></>
                 )}
               </div>
 
@@ -64,6 +86,14 @@ const NftDetailCard = () => {
                 <div className="hidden mb-10 font-sans text-4xl font-bold md:block md:mb-2">{nftData.name}</div>
                 <div className="pt-2 mx-2">{nftData.nft_description}</div>
                 <div className="mx-2">
+                  {/* Setup the Darkblock Solana Widget
+                   * For more information visit https://www.npmjs.com/package/@darkblock.io/sol-widget
+                   * @param {contract}
+                   * @param {id}
+                   * @param {w3}
+                   * @param {upgrader} optional
+                   */}
+
                   <div className="flex justify-end py-3 text-gray-800">
                     <SolWidget id={nftData.token} upgrade={true} />
                   </div>
@@ -73,7 +103,7 @@ const NftDetailCard = () => {
               </div>
             </div>
             <div>
-              <div className="grid w-full md:grid-cols-3 gap-4 px-4 py-12 mt-12 border-t-[1px] md:grid-cols-3 md:px-7">
+              <div className="grid w-full gap-4 px-4 py-12 mt-12 border-t-[1px] md:grid-cols-3 md:px-7">
                 {nftData.traits && (
                   <div className="flex flex-col pb-2">
                     <div className="flex flex-row mb-2">
@@ -83,10 +113,10 @@ const NftDetailCard = () => {
                       </div>
                     </div>
                     <div className="border border-gray-200 rounded-md">
-                      {nftData.traits?.map((i) => (
-                        <div key={i.value} className="grid grid-cols-2 p-2 md:grid-cols-2 ">
-                          <p className="pt-1 text-sm font-semibold text-left text-gray-500">{i.name}</p>
-                          <p className="text-base text-right text-fontColor ">{shortenAddr(i.value)}</p>
+                      {nftData.traits?.map((trait, index) => (
+                        <div key={index} className="grid grid-cols-2 p-2 md:grid-cols-2 ">
+                          <p className="pt-1 text-sm font-semibold text-left text-gray-500">{trait.name}</p>
+                          <p className="text-base text-right text-fontColor ">{shortenAddr(trait.value)}</p>
                         </div>
                       ))}
                     </div>
@@ -175,14 +205,20 @@ const NftDetailCard = () => {
                     <div className="flex pb-2 mt-2">
                       <h2 className="font-bold ">Created by</h2>
                       <div className="px-2 py-1 ml-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded">
-                        {nftData.creators?.length ? nftData.creators.length : 1}
+                        {creators?.length ? creators.length : 0}
                       </div>
                     </div>
-                    {nftData.creator_address && (
-                      <p className="p-3 font-medium text-center text-gray-500 border border-gray-100 rounded">
-                        {shortenAddr(nftData.creator_address)}
-                      </p>
-                    )}
+                    {creators?.map((item, i) => (
+                      <a
+                        className="pb-2 font-medium underline truncate"
+                        key={i}
+                        href={`https://app.darkblock.io/platform/${shortPlatforms[platform]}/${item}`}
+                        rel="noreferrer"
+                        target="_blank"
+                      >
+                        <p>{shortenAddr(item)}</p>
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
